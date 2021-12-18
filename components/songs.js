@@ -1,4 +1,3 @@
-import React from 'react';
 import {useRecoilValue} from 'recoil';
 import {playlistAtomState} from '../atoms/playlistAtom';
 import Song from './song';

@@ -2,7 +2,10 @@ import Head from 'next/head'
 import Sidebar from '../components/sidebar'
 import Center from '../components/center';
 import { getSession } from 'next-auth/react';
+import Player from '../components/player';
+import { useState } from 'react';
 export default function Home() {
+  
   return (
     <div className='h-screen overflow-hidden bg-black'>
       <Head>
@@ -12,8 +15,8 @@ export default function Home() {
         <Sidebar/>        
         <Center/>
       </main>
-      <div className=''>
-        {/* {player} */}        
+      <div className='sticky bottom-0'>
+        <Player/>    
       </div>
     </div>
   )

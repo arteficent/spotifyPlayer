@@ -1,17 +1,17 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import {HomeIcon, SearchIcon, LibraryIcon, PlusCircleIcon, HeartIcon, RssIcon} from "@heroicons/react/outline";
 import {signOut, useSession} from 'next-auth/react';
 import UseSpotify from '../hooks/useSpotify';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { playlistIdState } from '../atoms/playlistAtom';
+import { sidebarState } from '../atoms/sidebarToggle';
 
 function Sidebar() {
     const {data, status} = useSession();
     const spotifyApi =  UseSpotify();
     const [playlists, setPlaylists] = useState([]);
-    const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
-    
-    // console.log(playlistId);
+    const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);     
+    const [toggle, setToggle] = useRecoilState(sidebarState);
     
     useEffect(()=>{
         if(spotifyApi.getAccessToken())
@@ -21,11 +21,13 @@ function Sidebar() {
             })
         }
     }, [data, spotifyApi]);
+    
+    console.log(toggle);
     return (
-        <div className='text-customGrey p-5 text-xs lg:text-sm border-r border-customGrey overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex'>
-            <div className='space-y-4'>
+        <div className={`text-customGrey p-5 text-xs lg:text-sm border-r border-customGrey overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] ${toggle?'hidden':''} md:inline-flex pd-36`}>
+            <div className={`space-y-4`}>
                 
-                <button className='flex items-center space-x-2 hover:text-crimson'>
+                {/* <button className='flex items-center space-x-2 hover:text-crimson'>
                     <HomeIcon className='h-5, w-5'/> <p>Home</p>
                 </button>                 
                 <button className='flex items-center space-x-2 hover:text-crimson'>
@@ -45,7 +47,7 @@ function Sidebar() {
                 <button className='flex items-center space-x-2 hover:text-crimson'>
                     <RssIcon className='h-5, w-5'/> <p>Your episodes</p>
                 </button>                
-                <hr className='border-t-[0.1px] border-customGrey'/>
+                <hr className='border-t-[0.1px] border-customGrey'/> */}
                 
                 {/* {playlists} */}
                 {playlists.map((playlist) => (

@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import {useSession, signOut} from 'next-auth/react';
-import {ChevronDownIcon, LogoutIcon} from '@heroicons/react/outline';
+import {ChevronDownIcon, LogoutIcon, ViewListIcon} from '@heroicons/react/outline';
 import { shuffle } from 'lodash';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
 import { playlistIdState, playlistAtomState } from '../atoms/playlistAtom';
 import UseSpotify from '../hooks/useSpotify';
 import Songs from './songs';
+import { sidebarState } from '../atoms/sidebarToggle';
 
 const colors = [
     'from-[#b205a6]',
@@ -31,6 +32,9 @@ function Center() {
     const playlistId = useRecoilValue(playlistIdState);
     const [playlist, setPlaylist] = useRecoilState(playlistAtomState);
     const spotifyApi =  UseSpotify();   
+    
+    const [toggle, setToggle] = useRecoilState(sidebarState);
+    console.log(toggle);
     useEffect(() => {
         setColor(shuffle(colors).pop());
     }, [playlistId])    
@@ -44,14 +48,14 @@ function Center() {
     
     return (
         <div className='flex-grow text-white h-screen overflow-y-scroll scrollbar-hide'>
-            <header className=''>
-                <button className='h-10 w-10 bg-crimson rounded-full shadow-3xl hover:opacity-80 absolute top-10 sm:left-8 md:left-52 lg:left-64 p-2' onClick={() => signOut()}><LogoutIcon className='text-white'/></button>
-                <div className='flex items-center space-x-3 cursor-pointer p-1 pr-2 absolute top-5 right-8'>
-                    <img className='rounded-full h-20 w-20 bg-crimson p-0.5 shadow-3xl' src={session?.user.image} alt=''/>
+            <header className='absolute top-5 right-8'>                     
+                <div className='flex items-center space-x-3 cursor-pointer p-1 pr-2'>
+                    <img className='rounded-full h-20 w-20 bg-crimson p-0.5 shadow-3xl' src={session?.user.image} alt='' onClick={() => setToggle(!toggle)}/>
                     <div className='bg-crimson flex items-center rounded-full p-2 hover:opacity-80 shadow-3xl'>
-                    <h2>{session?.user.name}</h2>
-                    <ChevronDownIcon className='h-5 w-5'/>
+                        <h2>{session?.user.name}</h2>
+                        <ChevronDownIcon className='h-5 w-5'/>
                     </div>
+                    <button className='h-10 w-10 bg-crimson rounded-full shadow-3xl hover:opacity-80 p-2' onClick={() => signOut()}><LogoutIcon className='text-white'/></button>
                 </div>
             </header>
             
