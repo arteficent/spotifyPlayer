@@ -15,7 +15,7 @@ npm install
 npm run build  
 npm start  
 ```  
-Important Note:- To use this app you must have an running official spotify app on another device or platform and user account must be premium`   
+Important Note:- To use this app you must have an running official spotify app on another device or platform and user account must be premium.      
 
-
+[To deploy on vercel follow this tutorial](https://www.youtube.com/watch?v=DkaZqP4P3Ik&ab_channel=BigyanBist)
 
