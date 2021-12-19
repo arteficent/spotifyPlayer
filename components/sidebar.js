@@ -22,7 +22,6 @@ function Sidebar() {
         }
     }, [data, spotifyApi]);
     
-    console.log(toggle);
     return (
         <div className={`text-customGrey p-5 text-xs lg:text-sm border-r border-customGrey overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] ${toggle?'hidden':''} md:inline-flex pd-36`}>
             <div className={`space-y-4`}>

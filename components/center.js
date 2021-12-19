@@ -31,10 +31,9 @@ function Center() {
     const [color, setColor] = useState(null);
     const playlistId = useRecoilValue(playlistIdState);
     const [playlist, setPlaylist] = useRecoilState(playlistAtomState);
-    const spotifyApi =  UseSpotify();   
-    
+    const spotifyApi =  UseSpotify();      
     const [toggle, setToggle] = useRecoilState(sidebarState);
-    console.log(toggle);
+   
     useEffect(() => {
         setColor(shuffle(colors).pop());
     }, [playlistId])    
