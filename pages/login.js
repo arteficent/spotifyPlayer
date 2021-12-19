@@ -6,7 +6,7 @@ function Login({providers}) {
             {
                 Object.values( providers ).map((provider) => (
                     <div key={provider.id}>
-                        <button className='bg-crimson text-white p-5 rounded-full' onClick={()=> signIn(provider.id, {callbackUrl: '/'})}>
+                        <button className='bg-crimson text-white p-5 rounded-full' onClick={()=> signIn(provider.id, {callbackUrl: `${process.env.VERCEL_URL || process.env.NEXTAUTH_URL}`})}>
                             Login with {provider.name}
                         </button>
                     </div>
