@@ -5,7 +5,7 @@ function Login({providers}) {
             {/* <img src='https://links.papareact.com/9xl' alt='' className='w-64 h-64 p-5'/> */}
             {
                 Object.values( providers ).map((provider) => (
-                    <div>
+                    <div key={provider.id}>
                         <button className='bg-crimson text-white p-5 rounded-full' onClick={()=> signIn(provider.id, {callbackUrl: '/'})}>
                             Login with {provider.name}
                         </button>
