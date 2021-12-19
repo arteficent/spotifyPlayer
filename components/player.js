@@ -18,15 +18,12 @@ function Player() {
     const songInfo = UseSongInfo();
     
     const fetchCurrentSong = () =>{
-        if(!songInfo)
-        {
-            spotifyApi.getMyCurrentPlayingTrack().then(data =>{
-                setCurrentTrackId(data.body?.item?.id)
-            })
-            spotifyApi.getMyCurrentPlaybackState().then(data => {
-                setIsPlaying(data.body?.is_playing)
-            })
-        }
+        spotifyApi.getMyCurrentPlayingTrack().then(data =>{
+            setCurrentTrackId(data.body?.item?.id)
+        })
+        spotifyApi.getMyCurrentPlaybackState().then(data => {
+            setIsPlaying(data.body?.is_playing)
+        })
     }
     
     const handlePlayPause = () => {
@@ -52,7 +49,7 @@ function Player() {
     );
     
     const skipPrevious = async () => {
-            spotifyApi.skipToPrevious()
+            await spotifyApi.skipToPrevious()
             .then(function() {
             console.log('skip to previous');
             }, function(err) {    
@@ -67,7 +64,7 @@ function Player() {
     }
     
     const skipNext = async () => {
-        spotifyApi.skipToNext()
+        await spotifyApi.skipToNext()
         .then(function() {
         console.log('skip to next');
         }, function(err) {    
@@ -83,7 +80,7 @@ function Player() {
 
     
     useEffect(() => {
-        if(spotifyApi.getAccessToken() && !currentTrackId)
+        if(spotifyApi.getAccessToken())
         {
             fetchCurrentSong();
             setVol(25);
@@ -101,7 +98,7 @@ function Player() {
     return (
         <div className='h-24 bg-gradient-to-t from-black text-white grid grid-cols-3 text-xs md:text-base px-2 md:px-8'>            
             
-            <div className='flex items-center space-x-4'>
+            <div className='flex items-center space-x-4 shadow-3xl'>
                 <img className='hidden md:inline h-10 w-10' src={songInfo?.album.images[0]?.url} alt=''/>
                 <div>
                     <h3>{songInfo?.name}</h3>
@@ -109,7 +106,7 @@ function Player() {
                 </div>                
             </div>
             
-            <div className='flex items-center justify-evenly'>
+            <div className='flex items-center justify-evenly shadow-3xl'>
                 {/* <SwitchHorizontalIcon className='button'/> */}
                 <RewindIcon className='button' onClick={skipPrevious}/>
                 {isPlaying?<PauseIcon className='button h-10 w-10' onClick={handlePlayPause}/>:<PlayIcon className='button h-10 w-10' onClick={handlePlayPause}/>}
@@ -117,7 +114,7 @@ function Player() {
                 {/* <ReplyIcon className='button'/> */}
             </div>
             
-            <div className='flex items-center space-x-3 md:space-x-4 justify-end pr-5'>
+            <div className='flex items-center space-x-3 md:space-x-4 justify-end pr-5 shadow-3xl'>
                 <VolumeDownIcon className='button' onClick={() => vol>0?setVol(vol-10):vol}/>
                 <input className='w-14 md:w-28' type='range' value={vol} onChange={(e) => setVol(Number(e.target.value))} min={0} max={100}/>
                 <VolumeUpIcon className='button' onClick={() => vol<100?setVol(vol+10):vol}/>
