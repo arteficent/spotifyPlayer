@@ -39,10 +39,7 @@ export default NextAuth({
       signIn: '/login'
   },
   callbacks:{
-        async redirect({ url, baseUrl }) {
-        return baseUrl
-      },
-      async jwt({token, account, user}){
+    async jwt({token, account, user}){
           if(account && user)
           {
               return {
